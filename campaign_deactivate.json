@@ -1,0 +1,209 @@
+{
+	"info": {
+		"_postman_id": "d26a1694-9a36-43b0-8854-f093ff25bd6d",
+		"name": "campaign_decativate",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://portal.na6.livevox.com/lvp_13.0/login?client_code=livevox&user=rnarasimhaiah&pass=livevox123",
+					"protocol": "https",
+					"host": [
+						"portal",
+						"na6",
+						"livevox",
+						"com"
+					],
+					"path": [
+						"lvp_13.0",
+						"login"
+					],
+					"query": [
+						{
+							"key": "client_code",
+							"value": "livevox"
+						},
+						{
+							"key": "user",
+							"value": "rnarasimhaiah"
+						},
+						{
+							"key": "pass",
+							"value": "livevox123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_campaigns_list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();",
+							"",
+							"const x = response.dataObj;",
+							"// console.log(dataObj)",
+							"",
+							"const campign_list = [];",
+							"for (var y in x) {",
+							"    var start_fileame = x[y].filename;",
+							"    var start_fileame_start = start_fileame.startsWith(\"dsi_qc_lvinternal\"); ",
+							"    if (start_fileame_start) {",
+							"       campign_list.push(x[y].campaign_id);",
+							"    }",
+							"}",
+							"",
+							"pm.variables.set(\"campign_list\", campign_list);",
+							"console.log(campign_list);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://portal.na6.livevox.com/campaign_13.0/get_campaigns_db?&&fullConfigMgrGUI=true&client_id=3134278&noOfDays=1&level=M1_CC&showOnlyActiveCampaigns=false&showFutureCampaigns=false&includeLVInternalFiles=1&_={{$timestamp}}",
+					"protocol": "https",
+					"host": [
+						"portal",
+						"na6",
+						"livevox",
+						"com"
+					],
+					"path": [
+						"campaign_13.0",
+						"get_campaigns_db"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "fullConfigMgrGUI",
+							"value": "true"
+						},
+						{
+							"key": "client_id",
+							"value": "3134278"
+						},
+						{
+							"key": "noOfDays",
+							"value": "1"
+						},
+						{
+							"key": "level",
+							"value": "M1_CC"
+						},
+						{
+							"key": "showOnlyActiveCampaigns",
+							"value": "false"
+						},
+						{
+							"key": "showFutureCampaigns",
+							"value": "false"
+						},
+						{
+							"key": "includeLVInternalFiles",
+							"value": "1"
+						},
+						{
+							"key": "_",
+							"value": "{{$timestamp}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deactivete_campaign",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const campign_list = pm.variables.get('campign_list');",
+							"",
+							"pm.variables.set('current_campain',campign_list.shift());",
+							"",
+							"if (Array.isArray(campign_list) && campign_list.length > 0){",
+							"    postman.setNextRequest('deactivete_campaign');",
+							"} else {",
+							"    postman.setNextRequest(null);",
+							"}",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://portal.na6.livevox.com/lvp_13.0/campaign?operation=deactivate&campaign_id={{current_campain}}&client_id=3134278&skill_id=3155882&_{{$timestamp}}&fullConfigMgrGUI=true&rnd={{$timestamp}}",
+					"protocol": "https",
+					"host": [
+						"portal",
+						"na6",
+						"livevox",
+						"com"
+					],
+					"path": [
+						"lvp_13.0",
+						"campaign"
+					],
+					"query": [
+						{
+							"key": "operation",
+							"value": "deactivate"
+						},
+						{
+							"key": "campaign_id",
+							"value": "{{current_campain}}"
+						},
+						{
+							"key": "client_id",
+							"value": "3134278"
+						},
+						{
+							"key": "skill_id",
+							"value": "3155882"
+						},
+						{
+							"key": "_{{$timestamp}}",
+							"value": null
+						},
+						{
+							"key": "fullConfigMgrGUI",
+							"value": "true"
+						},
+						{
+							"key": "rnd",
+							"value": "{{$timestamp}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
