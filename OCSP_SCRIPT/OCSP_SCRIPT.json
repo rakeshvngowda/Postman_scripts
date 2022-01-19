@@ -1,0 +1,945 @@
+{
+	"info": {
+		"_postman_id": "0718c03c-f762-4b05-afbd-510e879afb60",
+		"name": "TST2_OCSP_TESTING Copy 3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "LVP_LOGIN",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://portal.tst2.livevox.net/lvp_12.0/login?operation=login&client_code=livevox&user=rrajarao&pass=livevox1",
+					"protocol": "https",
+					"host": [
+						"portal",
+						"tst2",
+						"livevox",
+						"net"
+					],
+					"path": [
+						"lvp_12.0",
+						"login"
+					],
+					"query": [
+						{
+							"key": "operation",
+							"value": "login"
+						},
+						{
+							"key": "client_code",
+							"value": "livevox"
+						},
+						{
+							"key": "user",
+							"value": "rrajarao"
+						},
+						{
+							"key": "pass",
+							"value": "livevox1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_COMPONENTS_DETAILS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json()",
+							"",
+							"const x = response.dataObj;",
+							"// console.log(x)",
+							"// console.log(typeof(x))",
+							"",
+							"const c_name = pm.environment.get(\"component_name\");",
+							"",
+							"// for (var y in x) {",
+							"//     if (x[y].name == c_name) {",
+							"//         pm.environment.set(\"serverPrefix\", x[y].serverPrefix);",
+							"//         console.log(y.serverPrefix)",
+							"//         pm.environment.set(\"c_id\", x[y].id);",
+							"//         console.log(y.id)",
+							"//         console.log(x[y])",
+							"//         console.log(typeof(x[y]))",
+							"//     }",
+							"// }",
+							"",
+							"for (var y in x) {",
+							"    if (x[y].name == c_name) {",
+							"        pm.variables.set(\"serverPrefix\", x[y].serverPrefix);",
+							"        console.log(y.serverPrefix)",
+							"        pm.variables.set(\"c_id\", x[y].id);",
+							"        console.log(y.id)",
+							"        console.log(x[y])",
+							"        console.log(typeof(x[y]))",
+							"    }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://internal.tst2.livevox.net/oss_17.0/components",
+					"protocol": "https",
+					"host": [
+						"internal",
+						"tst2",
+						"livevox",
+						"net"
+					],
+					"path": [
+						"oss_17.0",
+						"components"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_VERSIONS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json()",
+							"",
+							"const x = response.dataObj;",
+							"console.log(x)",
+							"console.log(typeof(x))",
+							"",
+							"// const c_name = pm.environment.get(\"version\");",
+							"",
+							"// for (var y in x) {",
+							"//     if (x[y].name == c_name) {",
+							"//         pm.environment.set(\"tshirt_size\", x[y].tshirt_size);",
+							"//         // pm.environment.set(\"c_id\", y.id);",
+							"//     }",
+							"// }",
+							"",
+							"const c_name = pm.variables.get(\"version\");",
+							"for (var y in x) {",
+							"    if (x[y].name == c_name) {",
+							"        pm.variables.set(\"tshirt_size\", x[y].tshirt_size);",
+							"        // pm.environment.set(\"c_id\", y.id);",
+							"        pm.variables.set(\"version_id\",x[y].id);",
+							"        pm.variables.set(\"code_release_tag\",x[y].code_release_tag);",
+							"    }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://internal.tst2.livevox.net/oss_17.0/versions/{{c_id}}?_={{$timestamp}}",
+					"protocol": "https",
+					"host": [
+						"internal",
+						"tst2",
+						"livevox",
+						"net"
+					],
+					"path": [
+						"oss_17.0",
+						"versions",
+						"{{c_id}}"
+					],
+					"query": [
+						{
+							"key": "_",
+							"value": "{{$timestamp}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BUILD_SERVER",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"// postman.setEnvironmentVariable(\"uuid\", jsonData.uuid);",
+							"pm.variables.set(\"uuid\", jsonData.uuid);",
+							"console.log(jsonData.uuid);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Building a new server \", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Building a new server with\");",
+							"});",
+							"",
+							"",
+							"const d = new Date(); ",
+							"const date_before = d.getTime();",
+							"pm.globals.set(\"date_before\", date_before);",
+							"console.log(date_before)",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "apikey",
+						"value": "{{apikey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\"env\":\"{{environment}}\",\"servertype\":\"{{serverPrefix}}\",\"tshirt\":\"{{tshirt_size}}\",\"release\":\"{{version}}\"}\n\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ocsp_server}}:8000/v4/orchestrator/{{build}}",
+					"protocol": "http",
+					"host": [
+						"{{ocsp_server}}"
+					],
+					"port": "8000",
+					"path": [
+						"v4",
+						"orchestrator",
+						"{{build}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_SERVER_STATUS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json()",
+							"",
+							"",
+							"if (response.results.global_status == \"incomplete\") {",
+							"    setTimeout(() => {},30000);",
+							"    postman.setNextRequest(pm.info.requestId);",
+							"}",
+							"",
+							"",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"// postman.setEnvironmentVariable(\"hostname\", jsonData.results.hostname);",
+							"",
+							"// postman.setEnvironmentVariable(\"hostname\", jsonData.results.hostname);",
+							"pm.variables.set(\"hostname\", jsonData.results.hostname);",
+							"console.log(jsonData.results.hostname);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// pm.test(\"success\", function () ",
+							"// {",
+							"//     pm.expect(pm.response.text()).to.not.include(\"failed\");",
+							"// });",
+							"",
+							"if(response.results.global_status == \"failed\") {",
+							"    postman.setNextRequest(null)",
+							"}",
+							"",
+							"// var date_b = pm.variables.get(\"date_before\");",
+							"// var f = new Date();",
+							"// var date_f = f.getTime();",
+							"",
+							"// if( (date_b-date_f)/100 > 200) {",
+							"//     postman.setNextRequest(null)",
+							"// }"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ocsp_server}}:8000/v4/orchestrator/{{status}}?uuid={{uuid}}&apikey={{apikey}}",
+					"protocol": "http",
+					"host": [
+						"{{ocsp_server}}"
+					],
+					"port": "8000",
+					"path": [
+						"v4",
+						"orchestrator",
+						"{{status}}"
+					],
+					"query": [
+						{
+							"key": "uuid",
+							"value": "{{uuid}}"
+						},
+						{
+							"key": "apikey",
+							"value": "{{apikey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_components_per_version Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json()",
+							"",
+							"let old_server_path = response.dataObj[0].path;",
+							"console.log(old_server_path)",
+							"const hostname =pm.variables.get(\"hostname\");",
+							"let new_server_name = hostname;",
+							"",
+							"",
+							"",
+							"let server_prefix = pm.variables.get(\"serverPrefix\");",
+							"",
+							"let start_index = 7+server_prefix.length;",
+							"let end_index = start_index +4",
+							"let remove_name = old_server_path.substring(start_index, end_index);",
+							"",
+							"//New server",
+							"let length_of_prefix = server_prefix.length; ",
+							"let get_new_servrer_number = new_server_name.substring(length_of_prefix,length_of_prefix+4);",
+							"let new_server_path = old_server_path.split(remove_name).join(get_new_servrer_number);",
+							"",
+							"pm.variables.set(\"new_server_path\",new_server_path);",
+							"console.log(new_server_path);",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://internal.tst2.livevox.net/oss_17.0/installations/{{c_id}}/{{version_id}}?_={{$timestamp}}",
+					"protocol": "https",
+					"host": [
+						"internal",
+						"tst2",
+						"livevox",
+						"net"
+					],
+					"path": [
+						"oss_17.0",
+						"installations",
+						"{{c_id}}",
+						"{{version_id}}"
+					],
+					"query": [
+						{
+							"key": "_",
+							"value": "{{$timestamp}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_availbale_instances_for deploying",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var get_installtion_variables = pm.response.json();",
+							"",
+							"console.log(get_installtion_variables)",
+							"",
+							"const x = get_installtion_variables.dataObj;",
+							"const hostname = pm.variables.get(\"hostname\");",
+							"for (let y in x){",
+							"    if (x[y].name == hostname) {",
+							"    pm.variables.set(\"instanceId\",x[y].instanceId);",
+							"}",
+							"}",
+							"",
+							"",
+							"",
+							"pm.test((hostname+\"avialable in instances\"), function () {",
+							"    pm.expect(pm.response.text()).to.include(hostname);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://internal.tst2.livevox.net/oss_17.0/get_available_instances?component_name={{component_name}}&_={{$timestamp}}",
+					"protocol": "https",
+					"host": [
+						"internal",
+						"tst2",
+						"livevox",
+						"net"
+					],
+					"path": [
+						"oss_17.0",
+						"get_available_instances"
+					],
+					"query": [
+						{
+							"key": "component_name",
+							"value": "{{component_name}}"
+						},
+						{
+							"key": "_",
+							"value": "{{$timestamp}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add-intsllation_to _oss",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json()",
+							"",
+							"",
+							"let installation_id = response.dataObj;",
+							"console.log(installation_id);",
+							"pm.variables.set(\"installation_id\",installation_id);",
+							"",
+							"setTimeout(() => {},10000);",
+							"",
+							"let message = response.message;",
+							"pm.test(message, function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Successfully added new Installation\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": -1,\n\t\"active\": true,\n\t\"component_version_id\": {{version_id}},\n\t\"version\": \"{{version}}\",\n\t\"tshirt_size\": \"{{tshirt_size}}\",\n\t\"server\": \"{{hostname}}\",\n\t\"instanceId\": \"{{instanceId}}\",\n\t\"path\": \"{{new_server_path}}\",\n\t\"name\": \"{{hostname}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://internal.tst2.livevox.net/oss_17.0/installation/{{c_id}}?_={{$timestamp}}",
+					"protocol": "https",
+					"host": [
+						"internal",
+						"tst2",
+						"livevox",
+						"net"
+					],
+					"path": [
+						"oss_17.0",
+						"installation",
+						"{{c_id}}"
+					],
+					"query": [
+						{
+							"key": "_",
+							"value": "{{$timestamp}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_available_instances_after_adding",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://internal.tst2.livevox.net/oss_17.0/get_available_instances?component_name={{component_name}}&_={{$timestamp}}",
+					"protocol": "https",
+					"host": [
+						"internal",
+						"tst2",
+						"livevox",
+						"net"
+					],
+					"path": [
+						"oss_17.0",
+						"get_available_instances"
+					],
+					"query": [
+						{
+							"key": "component_name",
+							"value": "{{component_name}}"
+						},
+						{
+							"key": "_",
+							"value": "{{$timestamp}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_components_per_version Copy 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json()",
+							"",
+							"",
+							"let host =pm.variables.get(\"hostname\");",
+							"let result = \"new host Present in oss list \"+host;",
+							"",
+							"pm.test(result, function () {",
+							"    pm.expect(pm.response.text()).to.include(host);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://internal.tst2.livevox.net/oss_17.0/installations/{{c_id}}/{{version_id}}?_={{$timestamp}}",
+					"protocol": "https",
+					"host": [
+						"internal",
+						"tst2",
+						"livevox",
+						"net"
+					],
+					"path": [
+						"oss_17.0",
+						"installations",
+						"{{c_id}}",
+						"{{version_id}}"
+					],
+					"query": [
+						{
+							"key": "_",
+							"value": "{{$timestamp}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deploy_component",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json()",
+							"",
+							"var count = 0",
+							"if (response.status == \"failed\" && count<3) {",
+							"    setTimeout(() => {},30000);",
+							"    postman.setNextRequest(pm.info.requestId);",
+							"    count = count +1;",
+							"}",
+							"",
+							"if (response.status == \"success\"){",
+							"    setTimeout(() => {},10000);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://internal.tst2.livevox.net/oss_17.0/deploy_component?installations={{hostname}}&tomcat_version=&jdk_version=&prepareServer=false&component={{component_name}}&comp_env={{environment}}&comp_version={{version}}&comp_installation=agent&svn_revision={{code_release_tag}}&autoscale=false&minTaskCount=2&maxTaskCount=2&deployment_comment=&runAsBackgroundTask=true&_={{$timestamp}}",
+					"protocol": "https",
+					"host": [
+						"internal",
+						"tst2",
+						"livevox",
+						"net"
+					],
+					"path": [
+						"oss_17.0",
+						"deploy_component"
+					],
+					"query": [
+						{
+							"key": "installations",
+							"value": "{{hostname}}"
+						},
+						{
+							"key": "tomcat_version",
+							"value": ""
+						},
+						{
+							"key": "jdk_version",
+							"value": ""
+						},
+						{
+							"key": "prepareServer",
+							"value": "false"
+						},
+						{
+							"key": "component",
+							"value": "{{component_name}}"
+						},
+						{
+							"key": "comp_env",
+							"value": "{{environment}}"
+						},
+						{
+							"key": "comp_version",
+							"value": "{{version}}"
+						},
+						{
+							"key": "comp_installation",
+							"value": "agent"
+						},
+						{
+							"key": "svn_revision",
+							"value": "{{code_release_tag}}"
+						},
+						{
+							"key": "autoscale",
+							"value": "false"
+						},
+						{
+							"key": "minTaskCount",
+							"value": "2"
+						},
+						{
+							"key": "maxTaskCount",
+							"value": "2"
+						},
+						{
+							"key": "deployment_comment",
+							"value": ""
+						},
+						{
+							"key": "runAsBackgroundTask",
+							"value": "true"
+						},
+						{
+							"key": "_",
+							"value": "{{$timestamp}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_installation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json()",
+							"",
+							"var count = 0",
+							"if (response.status == \"failed\" && count<3) {",
+							"    setTimeout(() => {},30000);",
+							"    postman.setNextRequest(pm.info.requestId);",
+							"    count = count +1;",
+							"}",
+							"",
+							"if (response.status == \"success\"){",
+							"    setTimeout(() => {},240000);",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://internal.tst2.livevox.net/oss_17.0/uninstall?target_server={{hostname}}&component={{component_name}}&comp_version={{version}}&component_installation_id={{installation_id}}&installation_name={{hostname}}&delete_installation=true&delete_server=true&_={{$timestamp}}",
+					"protocol": "https",
+					"host": [
+						"internal",
+						"tst2",
+						"livevox",
+						"net"
+					],
+					"path": [
+						"oss_17.0",
+						"uninstall"
+					],
+					"query": [
+						{
+							"key": "target_server",
+							"value": "{{hostname}}"
+						},
+						{
+							"key": "component",
+							"value": "{{component_name}}"
+						},
+						{
+							"key": "comp_version",
+							"value": "{{version}}"
+						},
+						{
+							"key": "component_installation_id",
+							"value": "{{installation_id}}"
+						},
+						{
+							"key": "installation_name",
+							"value": "{{hostname}}"
+						},
+						{
+							"key": "delete_installation",
+							"value": "true"
+						},
+						{
+							"key": "delete_server",
+							"value": "true"
+						},
+						{
+							"key": "_",
+							"value": "{{$timestamp}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_components_per_version Copy 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let host = pm.variables.get(\"hostname\"); ",
+							"",
+							"pm.test(\"checking server removed from oss \", function () ",
+							"{",
+							"    pm.expect(pm.response.text()).to.not.include(host);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://internal.tst2.livevox.net/oss_17.0/installations/{{c_id}}/{{version_id}}?_={{$timestamp}}",
+					"protocol": "https",
+					"host": [
+						"internal",
+						"tst2",
+						"livevox",
+						"net"
+					],
+					"path": [
+						"oss_17.0",
+						"installations",
+						"{{c_id}}",
+						"{{version_id}}"
+					],
+					"query": [
+						{
+							"key": "_",
+							"value": "{{$timestamp}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_instances_after_delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let host = pm.variables.get(\"hostname\"); ",
+							"",
+							"pm.test(\"checking server removed from oss \", function () ",
+							"{",
+							"    pm.expect(pm.response.text()).to.not.include(host);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://internal.tst2.livevox.net/oss_17.0/get_available_instances?component_name={{component_name}}&_={{$timestamp}}",
+					"protocol": "https",
+					"host": [
+						"internal",
+						"tst2",
+						"livevox",
+						"net"
+					],
+					"path": [
+						"oss_17.0",
+						"get_available_instances"
+					],
+					"query": [
+						{
+							"key": "component_name",
+							"value": "{{component_name}}"
+						},
+						{
+							"key": "_",
+							"value": "{{$timestamp}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "version",
+			"value": "",
+			"disabled": true
+		},
+		{
+			"key": "component_name",
+			"value": "ACD",
+			"disabled": true
+		},
+		{
+			"key": "server_name",
+			"value": "acd",
+			"disabled": true
+		},
+		{
+			"key": "tshirt",
+			"value": "c5.4xlarge",
+			"disabled": true
+		},
+		{
+			"key": "ocsp_server",
+			"value": "opsapps400.build2.va1.livevox.net"
+		},
+		{
+			"key": "apikey",
+			"value": "mUl4OzgW4yF064TrcKMnx8GrAkBsZDRr"
+		},
+		{
+			"key": "config_checks_server",
+			"value": "qad4000.tst2.livevox.net"
+		},
+		{
+			"key": "build",
+			"value": "newserver"
+		},
+		{
+			"key": "status",
+			"value": "newserverstatus"
+		},
+		{
+			"key": "delete",
+			"value": "deleteserver"
+		},
+		{
+			"key": "environment",
+			"value": "tst2"
+		}
+	]
+}
