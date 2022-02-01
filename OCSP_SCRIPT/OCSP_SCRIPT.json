@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "0718c03c-f762-4b05-afbd-510e879afb60",
-		"name": "TST2_OCSP_TESTING Copy 3",
+		"name": "TST2_OCSP_TESTING",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -11,16 +11,16 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://portal.tst2.livevox.net/lvp_12.0/login?operation=login&client_code=livevox&user=rrajarao&pass=livevox1",
+					"raw": "https://portal.{{environment}}.livevox.net/lvp_{{lvp_version}}/login?operation=login&client_code={{client_code}}&user={{user}}&pass={{pass}}",
 					"protocol": "https",
 					"host": [
 						"portal",
-						"tst2",
+						"{{environment}}",
 						"livevox",
 						"net"
 					],
 					"path": [
-						"lvp_12.0",
+						"lvp_{{lvp_version}}",
 						"login"
 					],
 					"query": [
@@ -30,15 +30,15 @@
 						},
 						{
 							"key": "client_code",
-							"value": "livevox"
+							"value": "{{client_code}}"
 						},
 						{
 							"key": "user",
-							"value": "rrajarao"
+							"value": "{{user}}"
 						},
 						{
 							"key": "pass",
-							"value": "livevox1"
+							"value": "{{pass}}"
 						}
 					]
 				}
@@ -46,7 +46,7 @@
 			"response": []
 		},
 		{
-			"name": "GET_COMPONENTS_DETAILS",
+			"name": "GET_COMPONENTS",
 			"event": [
 				{
 					"listen": "test",
@@ -90,16 +90,16 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://internal.tst2.livevox.net/oss_17.0/components",
+					"raw": "https://internal.{{environment}}.livevox.net/oss_{{oss_version}}/components",
 					"protocol": "https",
 					"host": [
 						"internal",
-						"tst2",
+						"{{environment}}",
 						"livevox",
 						"net"
 					],
 					"path": [
-						"oss_17.0",
+						"oss_{{oss_version}}",
 						"components"
 					]
 				}
@@ -155,16 +155,16 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://internal.tst2.livevox.net/oss_17.0/versions/{{c_id}}?_={{$timestamp}}",
+					"raw": "https://internal.{{environment}}.livevox.net/oss_{{oss_version}}/versions/{{c_id}}?_={{$timestamp}}",
 					"protocol": "https",
 					"host": [
 						"internal",
-						"tst2",
+						"{{environment}}",
 						"livevox",
 						"net"
 					],
 					"path": [
-						"oss_17.0",
+						"oss_{{oss_version}}",
 						"versions",
 						"{{c_id}}"
 					],
@@ -327,7 +327,7 @@
 			"response": []
 		},
 		{
-			"name": "get_components_per_version Copy",
+			"name": "GET_COMPONENTS",
 			"event": [
 				{
 					"listen": "test",
@@ -367,16 +367,16 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://internal.tst2.livevox.net/oss_17.0/installations/{{c_id}}/{{version_id}}?_={{$timestamp}}",
+					"raw": "https://internal.{{environment}}.livevox.net/oss_{{oss_version}}/installations/{{c_id}}/{{version_id}}?_={{$timestamp}}",
 					"protocol": "https",
 					"host": [
 						"internal",
-						"tst2",
+						"{{environment}}",
 						"livevox",
 						"net"
 					],
 					"path": [
-						"oss_17.0",
+						"oss_{{oss_version}}",
 						"installations",
 						"{{c_id}}",
 						"{{version_id}}"
@@ -392,7 +392,7 @@
 			"response": []
 		},
 		{
-			"name": "get_availbale_instances_for deploying",
+			"name": "get_availbale_instances_adding_to_oss.",
 			"event": [
 				{
 					"listen": "test",
@@ -424,16 +424,16 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://internal.tst2.livevox.net/oss_17.0/get_available_instances?component_name={{component_name}}&_={{$timestamp}}",
+					"raw": "https://internal.{{environment}}.livevox.net/oss_{{oss_version}}/get_available_instances?component_name={{component_name}}&_={{$timestamp}}",
 					"protocol": "https",
 					"host": [
 						"internal",
-						"tst2",
+						"{{environment}}",
 						"livevox",
 						"net"
 					],
 					"path": [
-						"oss_17.0",
+						"oss_{{oss_version}}",
 						"get_available_instances"
 					],
 					"query": [
@@ -488,16 +488,16 @@
 					}
 				},
 				"url": {
-					"raw": "https://internal.tst2.livevox.net/oss_17.0/installation/{{c_id}}?_={{$timestamp}}",
+					"raw": "https://internal.{{environment}}.livevox.net/oss_{{oss_version}}/installation/{{c_id}}?_={{$timestamp}}",
 					"protocol": "https",
 					"host": [
 						"internal",
-						"tst2",
+						"{{environment}}",
 						"livevox",
 						"net"
 					],
 					"path": [
-						"oss_17.0",
+						"oss_{{oss_version}}",
 						"installation",
 						"{{c_id}}"
 					],
@@ -512,39 +512,7 @@
 			"response": []
 		},
 		{
-			"name": "get_available_instances_after_adding",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://internal.tst2.livevox.net/oss_17.0/get_available_instances?component_name={{component_name}}&_={{$timestamp}}",
-					"protocol": "https",
-					"host": [
-						"internal",
-						"tst2",
-						"livevox",
-						"net"
-					],
-					"path": [
-						"oss_17.0",
-						"get_available_instances"
-					],
-					"query": [
-						{
-							"key": "component_name",
-							"value": "{{component_name}}"
-						},
-						{
-							"key": "_",
-							"value": "{{$timestamp}}"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "get_components_per_version Copy 3",
+			"name": "CHECKING_SERVER_ADDED_TO_OSS",
 			"event": [
 				{
 					"listen": "test",
@@ -558,7 +526,10 @@
 							"",
 							"pm.test(result, function () {",
 							"    pm.expect(pm.response.text()).to.include(host);",
-							"});"
+							"});",
+							"",
+							"",
+							"setTimeout(() => {},10000);"
 						],
 						"type": "text/javascript"
 					}
@@ -568,16 +539,16 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://internal.tst2.livevox.net/oss_17.0/installations/{{c_id}}/{{version_id}}?_={{$timestamp}}",
+					"raw": "https://internal.{{environment}}.livevox.net/oss_{{oss_version}}/installations/{{c_id}}/{{version_id}}?_={{$timestamp}}",
 					"protocol": "https",
 					"host": [
 						"internal",
-						"tst2",
+						"{{environment}}",
 						"livevox",
 						"net"
 					],
 					"path": [
-						"oss_17.0",
+						"oss_{{oss_version}}",
 						"installations",
 						"{{c_id}}",
 						"{{version_id}}"
@@ -593,7 +564,7 @@
 			"response": []
 		},
 		{
-			"name": "Deploy_component",
+			"name": "DEPLOY_COMPONENT",
 			"event": [
 				{
 					"listen": "test",
@@ -601,16 +572,30 @@
 						"exec": [
 							"const response = pm.response.json()",
 							"",
+							"if (response.status == \"success\"){",
+							"    setTimeout(() => {},10000);",
+							"}",
+							"",
 							"var count = 0",
-							"if (response.status == \"failed\" && count<3) {",
+							"if (response.status == \"fail\" && count<3) {",
 							"    setTimeout(() => {},30000);",
 							"    postman.setNextRequest(pm.info.requestId);",
 							"    count = count +1;",
 							"}",
 							"",
-							"if (response.status == \"success\"){",
-							"    setTimeout(() => {},10000);",
-							"}"
+							"// if (response.status == \"failed\") {",
+							"//     setTimeout(() => {},30000);",
+							"//     postman.setNextRequest(pm.info.requestId);",
+							"//     count = count +1;",
+							"// }",
+							"",
+							"",
+							"// if (response.status == \"failed\") {",
+							"//     setTimeout(() => {},30000);",
+							"//     postman.setNextRequest(pm.info.requestId);",
+							"// }",
+							"",
+							"// // setTimeout(() => {},0000);"
 						],
 						"type": "text/javascript"
 					}
@@ -620,16 +605,16 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "https://internal.tst2.livevox.net/oss_17.0/deploy_component?installations={{hostname}}&tomcat_version=&jdk_version=&prepareServer=false&component={{component_name}}&comp_env={{environment}}&comp_version={{version}}&comp_installation=agent&svn_revision={{code_release_tag}}&autoscale=false&minTaskCount=2&maxTaskCount=2&deployment_comment=&runAsBackgroundTask=true&_={{$timestamp}}",
+					"raw": "https://internal.{{environment}}.livevox.net/oss_{{oss_version}}/deploy_component?installations={{hostname}}&tomcat_version=&jdk_version=&prepareServer=false&component={{component_name}}&comp_env={{environment}}&comp_version={{version}}&comp_installation=agent&svn_revision={{code_release_tag}}&autoscale=false&minTaskCount=2&maxTaskCount=2&deployment_comment=&runAsBackgroundTask=true&_={{$timestamp}}",
 					"protocol": "https",
 					"host": [
 						"internal",
-						"tst2",
+						"{{environment}}",
 						"livevox",
 						"net"
 					],
 					"path": [
-						"oss_17.0",
+						"oss_{{oss_version}}",
 						"deploy_component"
 					],
 					"query": [
@@ -699,7 +684,7 @@
 			"response": []
 		},
 		{
-			"name": "delete_installation",
+			"name": "CHECK_USER_TASK_AFTER_DEPLOYMENT",
 			"event": [
 				{
 					"listen": "test",
@@ -707,16 +692,11 @@
 						"exec": [
 							"const response = pm.response.json()",
 							"",
-							"var count = 0",
-							"if (response.status == \"failed\" && count<3) {",
+							"if (response.dataObj[0].status == \"IN_PROGRESS\") {",
 							"    setTimeout(() => {},30000);",
 							"    postman.setNextRequest(pm.info.requestId);",
-							"    count = count +1;",
 							"}",
 							"",
-							"if (response.status == \"success\"){",
-							"    setTimeout(() => {},240000);",
-							"}",
 							""
 						],
 						"type": "text/javascript"
@@ -727,16 +707,163 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://internal.tst2.livevox.net/oss_17.0/uninstall?target_server={{hostname}}&component={{component_name}}&comp_version={{version}}&component_installation_id={{installation_id}}&installation_name={{hostname}}&delete_installation=true&delete_server=true&_={{$timestamp}}",
+					"raw": "https://internal.{{environment}}.livevox.net/oss_{{oss_version}}/usertask/get_user_tasks?client_id={{client_id}}&user_id={{user_id}}&page_number=1&page_size=10&page_set_size=100&_={{$timestamp}}",
 					"protocol": "https",
 					"host": [
 						"internal",
-						"tst2",
+						"{{environment}}",
 						"livevox",
 						"net"
 					],
 					"path": [
-						"oss_17.0",
+						"oss_{{oss_version}}",
+						"usertask",
+						"get_user_tasks"
+					],
+					"query": [
+						{
+							"key": "client_id",
+							"value": "{{client_id}}"
+						},
+						{
+							"key": "user_id",
+							"value": "{{user_id}}"
+						},
+						{
+							"key": "page_number",
+							"value": "1"
+						},
+						{
+							"key": "page_size",
+							"value": "10"
+						},
+						{
+							"key": "page_set_size",
+							"value": "100"
+						},
+						{
+							"key": "_",
+							"value": "{{$timestamp}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CONFIGCHECKS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"configchecks are passed\", function () ",
+							"{",
+							"    pm.expect(pm.response.text()).to.not.include(\"failed\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const d = new Date(); ",
+							"const date_after = d.getTime();",
+							"pm.globals.set(\"date_after\", date_after);",
+							"",
+							"before = pm.globals.get(\"date_before\");",
+							"const total_time_take = (date_after - before)/1000;",
+							"",
+							"console.log(\"Total time taken build server is :\",total_time_take , \" seconds\")",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{config_checks_server}}/runConfigCheck?cname={{component_name}}&ver={{version}}&servlist={{hostname}}&build_server=True&run_config=True",
+					"protocol": "http",
+					"host": [
+						"{{config_checks_server}}"
+					],
+					"path": [
+						"runConfigCheck"
+					],
+					"query": [
+						{
+							"key": "cname",
+							"value": "{{component_name}}"
+						},
+						{
+							"key": "ver",
+							"value": "{{version}}"
+						},
+						{
+							"key": "servlist",
+							"value": "{{hostname}}"
+						},
+						{
+							"key": "build_server",
+							"value": "True"
+						},
+						{
+							"key": "run_config",
+							"value": "True"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE_AND_DESTROY_SERVER_FROM_OSS.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json()",
+							"",
+							"if (response.status == \"success\"){",
+							"    setTimeout(() => {},10000);",
+							"}",
+							"",
+							"var count = 0",
+							"if (response.status == \"fail\" && count<3) {",
+							"    setTimeout(() => {},30000);",
+							"    postman.setNextRequest(pm.info.requestId);",
+							"    count = count +1;",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://internal.{{environment}}.livevox.net/oss_{{oss_version}}/uninstall?target_server={{hostname}}&component={{component_name}}&comp_version={{version}}&component_installation_id={{installation_id}}&installation_name={{hostname}}&delete_installation=true&delete_server=true&_={{$timestamp}}",
+					"protocol": "https",
+					"host": [
+						"internal",
+						"{{environment}}",
+						"livevox",
+						"net"
+					],
+					"path": [
+						"oss_{{oss_version}}",
 						"uninstall"
 					],
 					"query": [
@@ -778,18 +905,20 @@
 			"response": []
 		},
 		{
-			"name": "get_components_per_version Copy 2",
+			"name": "CHECK_USER_TASK_AFTER_DELETE",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"let host = pm.variables.get(\"hostname\"); ",
+							"const response = pm.response.json()",
 							"",
-							"pm.test(\"checking server removed from oss \", function () ",
-							"{",
-							"    pm.expect(pm.response.text()).to.not.include(host);",
-							"});"
+							"if (response.dataObj[0].status == \"IN_PROGRESS\") {",
+							"    setTimeout(() => {},30000);",
+							"    postman.setNextRequest(pm.info.requestId);",
+							"}",
+							"",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -799,21 +928,40 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://internal.tst2.livevox.net/oss_17.0/installations/{{c_id}}/{{version_id}}?_={{$timestamp}}",
+					"raw": "https://internal.{{environment}}.livevox.net/oss_{{oss_version}}/usertask/get_user_tasks?client_id={{client_id}}&user_id={{user_id}}&page_number=1&page_size=10&page_set_size=100&_={{$timestamp}}",
 					"protocol": "https",
 					"host": [
 						"internal",
-						"tst2",
+						"{{environment}}",
 						"livevox",
 						"net"
 					],
 					"path": [
-						"oss_17.0",
-						"installations",
-						"{{c_id}}",
-						"{{version_id}}"
+						"oss_{{oss_version}}",
+						"usertask",
+						"get_user_tasks"
 					],
 					"query": [
+						{
+							"key": "client_id",
+							"value": "{{client_id}}"
+						},
+						{
+							"key": "user_id",
+							"value": "{{user_id}}"
+						},
+						{
+							"key": "page_number",
+							"value": "1"
+						},
+						{
+							"key": "page_size",
+							"value": "10"
+						},
+						{
+							"key": "page_set_size",
+							"value": "100"
+						},
 						{
 							"key": "_",
 							"value": "{{$timestamp}}"
@@ -824,7 +972,7 @@
 			"response": []
 		},
 		{
-			"name": "get_instances_after_delete",
+			"name": "VERYFYING_SERVER_DELETE_OSS.",
 			"event": [
 				{
 					"listen": "test",
@@ -845,23 +993,21 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://internal.tst2.livevox.net/oss_17.0/get_available_instances?component_name={{component_name}}&_={{$timestamp}}",
+					"raw": "https://internal.{{environment}}.livevox.net/oss_{{oss_version}}/installations/{{c_id}}/{{version_id}}?_={{$timestamp}}",
 					"protocol": "https",
 					"host": [
 						"internal",
-						"tst2",
+						"{{environment}}",
 						"livevox",
 						"net"
 					],
 					"path": [
-						"oss_17.0",
-						"get_available_instances"
+						"oss_{{oss_version}}",
+						"installations",
+						"{{c_id}}",
+						"{{version_id}}"
 					],
 					"query": [
-						{
-							"key": "component_name",
-							"value": "{{component_name}}"
-						},
 						{
 							"key": "_",
 							"value": "{{$timestamp}}"
@@ -940,6 +1086,34 @@
 		{
 			"key": "environment",
 			"value": "tst2"
+		},
+		{
+			"key": "user_id",
+			"value": "131284"
+		},
+		{
+			"key": "client_id",
+			"value": "11235"
+		},
+		{
+			"key": "client_code",
+			"value": "livevox"
+		},
+		{
+			"key": "user",
+			"value": "rrajarao"
+		},
+		{
+			"key": "pass",
+			"value": "livevox1"
+		},
+		{
+			"key": "lvp_version",
+			"value": "12.0"
+		},
+		{
+			"key": "oss_version",
+			"value": "17.0"
 		}
 	]
 }
